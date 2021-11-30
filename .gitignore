@@ -1,0 +1,9 @@
+# Virtual environment
+/env
+
+# Jupyter notebook checkpoint
+.ipynb_checkpoints
+
+# Data folder
+/data/*
+!/data/.gitkeep
