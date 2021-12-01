@@ -1,12 +1,26 @@
 # Import important packages
+import os
+import yaml
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 import joblib
 
-# path to dataset
-filename="data/breast-cancer-wisconsin.data"
+# Config path
+CONFIG_PATH = 'config/'
+
+def load_config(config_name):
+    """
+    Function that reads and loads a YAML file
+    """
+    with open(os.path.join(CONFIG_PATH, config_name)) as file:
+        config = yaml.safe_load(file)
+    
+    return config
+
+# Load config file
+config = load_config("my_config.yaml")
 
 #set columns name
 columns_name = [
@@ -23,18 +37,20 @@ columns_name = [
     'class'
 ]
 
-# load data
-data = pd.read_csv(filename, names = columns_name)
 
+# load data
+data = pd.read_csv(
+    os.path.join(config['data_directory'],config['data_name']), 
+    names=columns_name
+    )
 
 # Replace "?" with "-9999"
 data = data.replace('?', -9999)
 
 # Define X (independent variables) and y (target variable)
+X = np.array(data.drop(config['target_name'], 1))
 
-X = data.drop(['class'], axis=1)
-
-y = data['class']
+y = np.array(data[config['target_name']])
 
 # split data into train and test set
 X_train, X_test, y_train, y_test = train_test_split(
