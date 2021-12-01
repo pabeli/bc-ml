@@ -1,9 +1,9 @@
 # INITIAL SETTINGS
-data_directory: ../data/
+data_directory: data
 data_name: breast-cancer-wisconsin.data
 target_name: class
 test_size: 0.2
-model_directory: ../models/
+model_directory: /models
 model_name: KNN_classifier.pkl
 
 #kNN parameters
